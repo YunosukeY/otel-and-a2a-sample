@@ -5,6 +5,7 @@ from common.types import AgentSkill, AgentCapabilities, AgentCard
 from common.server import A2AServer
 
 from task_manager import MyAgentTaskManager
+from opentelemetry.instrumentation.starlette import StarletteInstrumentor
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -43,6 +44,7 @@ def main(host, port):
         host=host,
         port=port,
     )
+    StarletteInstrumentor.instrument_app(server.app)
     server.start()
 
 
